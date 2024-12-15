@@ -1,0 +1,220 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlock the Key</title>
+    <style>                                                          
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('cara.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            transition: background-color 3s ease-in-out;
+            animation: hackGlitchBackground 4s infinite;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .key {
+            width: 80px;
+            height: auto;
+            background-color: transparent;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 1s ease-in-out;
+        }
+
+        .key img {
+            width: 100%;
+            height: auto;
+            animation: none;
+        }
+
+        .code {
+            font-size: 20px;
+            color: #00ff00;
+            background-color: #000;
+            padding: 15px;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        input {
+            background-color: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            font-size: 18px;
+            font-family: 'Courier New', monospace;
+            padding: 5px;
+            width: 120px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .final-text {
+            display: none;
+            font-size: 50px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px #000000;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInText 4s forwards;
+        }
+
+        .fullscreen-image {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            opacity: 1;
+            animation: fadeOutImage 6s forwards;
+        }
+
+        @keyframes fadeOutImage {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        @keyframes hackGlitchBackground {
+            0%, 100% {
+                filter: none;
+                opacity: 1;
+            }
+            10% {
+                filter: brightness(1.5) contrast(1.5) hue-rotate(10deg);
+                opacity: 0.8;
+            }
+            20% {
+                filter: invert(1);
+                opacity: 0.6;
+            }
+            30% {
+                filter: contrast(2);
+                opacity: 0.9;
+            }
+            50% {
+                filter: hue-rotate(-30deg);
+                opacity: 0.7;
+            }
+            70% {
+                filter: grayscale(1);
+                opacity: 0.8;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="key" id="key">
+            <img src="Dani.png" alt="Key" id="keyImage">
+        </div>
+        <div class="code">
+            <div>Enter Code:</div>
+            <input type="text" id="codeInput" maxlength="4">
+        </div>
+        <button onclick="checkCode()">Unlock</button>
+    </div>
+    <div class="final-text" id="finalText">EL CANAL</div>
+    <img src="mi_imagen.jpg" alt="Imagen final" class="fullscreen-image" id="finalImage">
+    <audio id="Cancionla" src="Cancionla.mp3" preload="auto"></audio>
+
+    <script>
+        function checkCode() {
+            const code = document.getElementById('codeInput').value;
+            const key = document.getElementById('key');
+            const keyImage = document.getElementById('keyImage');
+            const container = document.getElementById('container');
+            const finalText = document.getElementById('finalText');
+            const finalImage = document.getElementById('finalImage');
+            const body = document.body;
+            const music = document.getElementById('Cancionla');
+
+            if (code === '3112') {
+                music.play().catch(() => console.log("El navegador bloqueó la reproducción automática."));
+
+                // Animar la llave con rotación
+                keyImage.style.animation = 'rotateKey 2s linear';
+
+                setTimeout(() => {
+                    key.style.display = 'none';
+
+                    body.classList.add('background-black');
+                    container.style.display = 'none';
+                    finalText.style.display = 'block';
+
+                    setTimeout(() => {
+                        finalImage.style.display = 'block';
+
+                        // Cuando termine de desvanecerse la imagen, se asegura de que no interfiera
+                        finalImage.addEventListener('animationend', () => {
+                            finalImage.style.display = 'none';
+                        });
+                    }, 3000);
+                }, 2500);
+            } else {
+                alert('Incorrect code. Try again.');
+            }
+        }
+    </script>
+</body>
+</html>
